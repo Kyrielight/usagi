@@ -18,7 +18,7 @@ PATHS = {
     'j.? .*': jisho.resolve,
 }
 
-def resolve_path(command, default=google.resolve):
+def resolve_path(command, default=google.default):
     for key, path in PATHS.items():
         if re.match(r"{}".format(key), command, re.IGNORECASE):
             return path
