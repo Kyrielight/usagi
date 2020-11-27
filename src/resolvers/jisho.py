@@ -7,7 +7,7 @@ SENTENCES = quote(" #sentences")
 NAMES = quote(" #names")
 
 def resolve(args=[]):
-    if args:
+    if len(args) > 1:
         root_arg = args[0].lower() 
         rest_arg = ' '.join(args[1:])
 

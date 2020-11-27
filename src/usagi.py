@@ -12,10 +12,10 @@ from resolvers import *
 app = Flask(__name__)
 
 PATHS = {
-    'a.? .*': amazon.resolve,
-    'f.? .*': facebook.resolve,
-    'g.? .*': google.resolve,
-    'j.? .*': jisho.resolve,
+    'a.?.*': amazon.resolve,
+    'f.?.*': facebook.resolve,
+    'g.?.*': google.resolve,
+    'j.?.*': jisho.resolve,
 }
 
 def resolve_path(command, default=google.default):
