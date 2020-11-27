@@ -1,4 +1,4 @@
-#pylint:disable=unused-wildcard-import,undefined-variable
+#pylint:disable=unused-wildcard-import,undefined-variable,import-error
 
 import re
 import sys
@@ -38,6 +38,4 @@ def bunny():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080, debug=True)
-    #args_comb = " ".join(sys.argv[1:])
-    #print(resolve_path(args_comb)(sys.argv[1:]))
+    app.run(host='0.0.0.0', port=8080, debug=False)
