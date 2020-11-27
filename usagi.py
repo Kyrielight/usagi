@@ -1,45 +1,43 @@
-from bunny.bunny import BunnyCommands
-from flask import Flask, request, redirect, render_template
+#pylint:disable=unused-wildcard-import,undefined-variable
+
+import re
+import sys
+
+from flask import Flask, request, redirect
 from urllib.parse import quote
 
+from resolvers import *
+
+# Flask application
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
-def home():
-    # TODO: Implement home page!
-    return redirect('https://google.com')
+PATHS = {
+    'a.? .*': amazon.resolve,
+    'f.? .*': facebook.resolve,
+    'g.? .*': google.resolve,
+    'j.? .*': jisho.resolve,
+}
 
-@app.route('/bunny', methods=['GET'])
-def query():
-    # Handle a standard query.
+def resolve_path(command, default=google.resolve):
+    for key, path in PATHS.items():
+        if re.match(r"{}".format(key), command, re.IGNORECASE):
+            return path
+    return default
+
+@app.route("/bunny", methods=['GET'])
+def bunny():
     try:
-
-        # If no args were provided, redirect to /
         if 'query' not in request.args or not request.args['query']:
-            return redirect('/')
-        
-        # Get the passed in command and extract the first word
-        command_joined = request.args['query']
-        command_split = command_joined.split(" ")
+            raise Exception()
 
-        command = None
-        option_args = None # Maintain support for potentially 2+ argument commands in the future.
-
-        if len(command_split) == 1:
-            command = command_split[0]
-            option_args = list()
-        else:
-            command = command_split[0]
-            option_args = command_split[1:]
-        
-        try:
-            return redirect(getattr(globals()['BunnyCommands'], command)(option_args))
-        except:
-            return redirect('https://www.google.com/search?q={}'.format(quote(request.args['query'])))
+        command = request.args['query']
+        return redirect(resolve_path(command)(command.split(" ")))
 
     except:
-        return redirect('https://google.com/')
+        return redirect('https://google.com')
+
 
 if __name__ == "__main__":
-    #print(getattr(globals()['Commands'], 'a')('hello world'))
     app.run(host='0.0.0.0', port=8080, debug=True)
+    #args_comb = " ".join(sys.argv[1:])
+    #print(resolve_path(args_comb)(sys.argv[1:]))
