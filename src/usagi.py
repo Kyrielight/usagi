@@ -1,4 +1,4 @@
-#pylint:disable=unused-wildcard-import,undefined-variable,import-error
+#pylint:disable=unused-wildcard-import,undefined-variable,import-error,anomalous-backslash-in-string
 
 import re
 import sys
@@ -12,10 +12,12 @@ from resolvers import *
 app = Flask(__name__)
 
 PATHS = {
-    'a.?.*': amazon.resolve,
-    'f.?.*': facebook.resolve,
-    'g.?.*': google.resolve,
-    'j.?.*': jisho.resolve,
+    'a\w?.*': amazon.resolve,
+    'f\w?.*': facebook.resolve,
+    'g\w?.*': google.resolve,
+    'j\w?.*': jisho.resolve,
+    'r\/\w*': reddit.subreddit,
+    're?((18)?|(nsfw)?).*': reddit.search,
 }
 
 def resolve_path(command, default=google.default):
@@ -38,4 +40,5 @@ def bunny():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    print(resolve_path(" ".join(sys.argv[1:]))(sys.argv[1:]))
+    #app.run(host='0.0.0.0', port=8080, debug=False)
