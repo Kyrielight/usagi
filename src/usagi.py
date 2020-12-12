@@ -15,7 +15,7 @@ PATHS = {
     '^a(?:\ .+)?$': amazon.resolve,
     '^f(?:\ .+)?$': facebook.resolve,
     '^g(?:\ .+)?$': google.resolve,
-    '^j(?:\ .+)?$': jisho.resolve,
+    '^j[wksn]?(?:\ .+)?$': jisho.resolve,
     'r\/\w*': reddit.subreddit,
     're?((18)?|(nsfw)?).*': reddit.search,
 }
