@@ -12,17 +12,17 @@ from resolvers import *
 app = Flask(__name__)
 
 PATHS = {
-    'a\w?.*': amazon.resolve,
-    'f\w?.*': facebook.resolve,
-    'g\w?.*': google.resolve,
-    'j\w?.*': jisho.resolve,
+    '^a(?:\ .+)?$': amazon.resolve,
+    '^f(?:\ .+)?$': facebook.resolve,
+    '^g(?:\ .+)?$': google.resolve,
+    '^j(?:\ .+)?$': jisho.resolve,
     'r\/\w*': reddit.subreddit,
     're?((18)?|(nsfw)?).*': reddit.search,
 }
 
 def resolve_path(command, default=google.default):
     for key, path in PATHS.items():
-        if re.match(r"{}".format(key), command, re.IGNORECASE):
+        if re.match(r"{}".format(key), command.strip(), re.IGNORECASE):
             return path
     return default
 
