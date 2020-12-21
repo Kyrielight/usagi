@@ -17,7 +17,7 @@ PATHS = {
     '^g(?:\ .+)?$': google.resolve,
     '^j[wksn]?(?:\ .+)?$': jisho.resolve,
     '^r\/\w*$': reddit.subreddit,
-    '^re?((18)?|(nsfw)?).*$': reddit.search,
+    '^re?((18)|(nsfw))? .+$': reddit.search,
     '^t@.+$': twitter.at,
 }
 
