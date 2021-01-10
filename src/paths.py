@@ -8,6 +8,7 @@ PATHS = {
     'f(?:\ .+)?': facebook.resolve,
     'g(?:\ .+)?': google.search,
     'j[wksn]?(?:\ .+)?': jisho.resolve,
+    'kb(?:\ .+)?': kotobank.word_search,
     'r\/\w*': reddit.subreddit,
     're?((18)|(nsfw))? .+': reddit.search,
     't@.+': twitter.at,
